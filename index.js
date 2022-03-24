@@ -1,6 +1,35 @@
 import chalk from 'chalk';
 import fs from 'fs';
 
+
+//***EXTRAINDO LINKS COM EXPRESSÃO REGULAR COM O MÉTODO EXEC() NUMA ESTRUTURA DE REPETIÇÃO***/
+function extractLinks(text) {
+    const regex = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm;
+    const arrayResult = [];
+
+    let temp;
+    while((temp = regex.exec(text)) != null) {
+        arrayResult.push({[temp[1]]: temp[2]});
+    }
+    
+    return arrayResult;
+}
+
+// //***EXTRAINDO LINKS COM EXPRESSÃO REGULAR COM O MÉTODO EXEC()***/
+// function extractLinks(text) {
+//     const regex = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm;
+//     const extractedLinks = regex.exec(text);
+//     console.log(extractedLinks);
+// }
+
+// //***EXTRAINDO LINKS COM EXPRESSÃO REGULAR COM O MÉTODO MATCH()***/
+// function extractLinks(text) {
+//     const regex = /\[([^\]]*)\]\((https?:\/\/[^$#\s].[^\s]*)\)/gm;
+//     const extractedLinks = text.match(regex);
+//     console.log(extractedLinks);
+// }
+
+
 //***TRATAMENTO DE ERRO***/
 function treatError (err) {
     throw new Error(chalk.red(err.code, 'Não há arquivo no caminho!'));
@@ -11,7 +40,7 @@ async function getFile(pathOfFile) {
     const encoding = 'utf-8';
     try {
         const text = await fs.promises.readFile(pathOfFile, encoding)
-        console.log(chalk.blue(text));
+        console.log(extractLinks(text));
     }catch(err){
         treatError(err);
     }    
@@ -39,4 +68,5 @@ async function getFile(pathOfFile) {
 //         }
 //     })
 // }
+
 getFile('./arquivos/texto1.md');
