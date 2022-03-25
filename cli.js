@@ -7,7 +7,7 @@ const path = process.argv;
 async function processText(pathOfFile) {  
     const result = await getFile(pathOfFile[2]);
     if(path[3] === 'validar') {
-        console.log(chalk.yellow('links validados'), validateURLs(result));
+        console.log(chalk.yellow('links validados'), await validateURLs(result));
     } else {
         console.log(chalk.yellow('Lista de links:'), result);
     }    
