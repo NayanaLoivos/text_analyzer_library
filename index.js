@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import fs from 'fs';
-
+ 
 
 //***EXTRAINDO LINKS COM EXPRESSÃO REGULAR COM O MÉTODO EXEC() NUMA ESTRUTURA DE REPETIÇÃO***/
 function extractLinks(text) {
@@ -12,7 +12,7 @@ function extractLinks(text) {
         arrayResult.push({[temp[1]]: temp[2]});
     }
     
-    return arrayResult;
+    return arrayResult.length === 0 ? 'Não há links' : arrayResult;
 }
 
 // //***EXTRAINDO LINKS COM EXPRESSÃO REGULAR COM O MÉTODO EXEC()***/
@@ -36,11 +36,11 @@ function treatError (err) {
 }
 
 //***FUNÇÃO ASINCRONA COM ASYNC E AWAIT***/
-async function getFile(pathOfFile) {
+export default async function getFile(pathOfFile) {
     const encoding = 'utf-8';
     try {
         const text = await fs.promises.readFile(pathOfFile, encoding)
-        console.log(extractLinks(text));
+        return extractLinks(text);
     }catch(err){
         treatError(err);
     }    
@@ -69,4 +69,4 @@ async function getFile(pathOfFile) {
 //     })
 // }
 
-getFile('./arquivos/texto1.md');
+
